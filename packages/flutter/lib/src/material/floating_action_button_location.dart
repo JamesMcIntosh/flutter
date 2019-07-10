@@ -222,21 +222,20 @@ abstract class _DockedFloatingActionButtonLocation extends FloatingActionButtonL
   // where it docks to the [BottomAppBar].
   @protected
   double getDockedY(ScaffoldPrelayoutGeometry scaffoldGeometry) {
-    final double contentBottom = scaffoldGeometry.contentBottom;
-    final double bottomSheetHeight = scaffoldGeometry.bottomSheetSize.height;
+    final double fabRadius = scaffoldGeometry.floatingActionButtonSize.width / 2;
     final double fabHeight = scaffoldGeometry.floatingActionButtonSize.height;
-    final double snackBarHeight = scaffoldGeometry.snackBarSize.height;
 
-    double fabY = contentBottom - fabHeight / 2.0;
-    // The FAB should sit with a margin between it and the snack bar.
-    if (snackBarHeight > 0.0)
-      fabY = math.min(fabY, contentBottom - snackBarHeight - fabHeight - kFloatingActionButtonMargin);
-    // The FAB should sit with its center in front of the top of the bottom sheet.
-    if (bottomSheetHeight > 0.0)
-      fabY = math.min(fabY, contentBottom - bottomSheetHeight - fabHeight / 2.0);
+    // see: https://material.io/design/components/app-bars-bottom.html#behavior
 
-    final double maxFabY = scaffoldGeometry.scaffoldSize.height - fabHeight;
-    return math.min(maxFabY, fabY);
+    // Snack bars should have a bottom margin which moves them above the floating action button
+    // final double snackBarHeight = math.max(scaffoldGeometry.snackBarSize.height, 0.0);
+
+    // FAB should be covered by bottom sheet so ignore their height
+    // final double bottomSheetHeight = math.max(scaffoldGeometry.bottomSheetSize.height, 0.0);
+
+    // final double fabY = scaffoldGeometry.contentBottom + fabRadius - fabHeight- snackBarHeight - bottomSheetHeight;
+
+    return scaffoldGeometry.contentBottom + fabRadius - fabHeight;
   }
 }
 
