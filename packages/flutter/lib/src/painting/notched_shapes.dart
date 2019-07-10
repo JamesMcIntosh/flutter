@@ -76,7 +76,7 @@ class CircularNotchedRectangle extends NotchedShape {
 
     final double r = notchRadius;
     final double a = -1.0 * r - s2;
-    final double b = host.top - guest.center.dy;
+    final double b = host.top;
 
     final double n2 = math.sqrt(b * b * r * r * (a * a + b * b - r * r));
     final double p2xA = ((a * r * r) - n2) / (a * a + b * b);
@@ -100,7 +100,7 @@ class CircularNotchedRectangle extends NotchedShape {
 
     // translate all points back to the absolute coordinate system.
     for (int i = 0; i < p.length; i += 1)
-      p[i] += guest.center;
+      p[i] += host.topCenter;
 
     return Path()
       ..moveTo(host.left, host.top)
